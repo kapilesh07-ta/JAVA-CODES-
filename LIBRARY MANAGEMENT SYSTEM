@@ -1,0 +1,46 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Book {
+    private String title;
+    private String author;
+    private boolean isAvailable;
+
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+        this.isAvailable = true;
+    }
+
+    public void borrowBook() {
+        if (isAvailable) {
+            isAvailable = false;
+            System.out.println(title + " has been borrowed.");
+        } else {
+            System.out.println(title + " is currently unavailable.");
+        }
+    }
+
+    public void returnBook() {
+        isAvailable = true;
+        System.out.println(title + " has been returned.");
+    }
+
+    public void displayInfo() {
+        System.out.println(title + " by " + author + " | Available: " + isAvailable);
+    }
+}
+
+public class LibrarySystem {
+    public static void main(String[] args) {
+        List<Book> books = new ArrayList<>();
+        books.add(new Book("Java Basics", "Author A"));
+        books.add(new Book("Advanced Java", "Author B"));
+
+        for (Book book : books) book.displayInfo();
+        books.get(0).borrowBook();
+        books.get(0).displayInfo();
+        books.get(0).returnBook();
+        books.get(0).displayInfo();
+    }
+}
