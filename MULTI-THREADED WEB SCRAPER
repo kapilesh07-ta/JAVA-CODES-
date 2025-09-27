@@ -1,0 +1,29 @@
+import java.io.*;
+import java.net.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class WebScraper {
+    private static void fetch(String url) {
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                if (inputLine.contains("<title>")) {
+                    System.out.println("Title found: " + inputLine);
+                    break;
+                }
+            }
+            in.close();
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    public static void main(String[] args) {
+        String[] urls = {"https://example.com", "https://openai.com"};
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        for (String url : urls) {
+            executor.execute(() -> fetch(url));
+        }
+        executor.shutdown();
+    }
+}
