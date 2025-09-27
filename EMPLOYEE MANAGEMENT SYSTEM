@@ -1,0 +1,35 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Employee {
+    private String name;
+    private String position;
+    private double salary;
+
+    public Employee(String name, String position, double salary) {
+        this.name = name;
+        this.position = position;
+        this.salary = salary;
+    }
+
+    public void displayInfo() {
+        System.out.println(name + " | " + position + " | $" + salary);
+    }
+
+    public void giveRaise(double amount) {
+        salary += amount;
+        System.out.println(name + " got a raise of $" + amount);
+    }
+}
+
+public class EmployeeSystem {
+    public static void main(String[] args) {
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee("Jefferin", "Developer", 40000));
+        employees.add(new Employee("Alice", "Designer", 35000));
+
+        for (Employee emp : employees) emp.displayInfo();
+        employees.get(0).giveRaise(5000);
+        employees.get(0).displayInfo();
+    }
+}
