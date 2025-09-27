@@ -1,0 +1,43 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Student {
+    private String name;
+    private int[] marks;
+
+    public Student(String name, int[] marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    public double calculateAverage() {
+        int sum = 0;
+        for (int mark : marks) sum += mark;
+        return (double) sum / marks.length;
+    }
+
+    public String getGrade() {
+        double avg = calculateAverage();
+        if (avg >= 90) return "A+";
+        if (avg >= 80) return "A";
+        if (avg >= 70) return "B";
+        if (avg >= 60) return "C";
+        return "F";
+    }
+
+    public void displayReport() {
+        System.out.println("Student: " + name);
+        System.out.println("Average: " + calculateAverage());
+        System.out.println("Grade: " + getGrade());
+    }
+}
+
+public class GradingSystem {
+    public static void main(String[] args) {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("Alice", new int[]{85, 90, 78}));
+        students.add(new Student("Bob", new int[]{92, 88, 95}));
+
+        for (Student s : students) s.displayReport();
+    }
+}
