@@ -1,0 +1,45 @@
+import java.io.*;
+import java.util.*;
+
+class Expense implements Serializable {
+    String description;
+    double amount;
+
+    Expense(String description, double amount) {
+        this.description = description;
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return description + " : $" + amount;
+    }
+}
+
+public class ExpenseTracker {
+    private static final String FILE_NAME = "expenses.dat";
+
+    public static void addExpense(String desc, double amt) throws IOException {
+        List<Expense> expenses = readExpenses();
+        expenses.add(new Expense(desc, amt));
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            oos.writeObject(expenses);
+        }
+    }
+
+    public static List<Expense> readExpenses() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            return (List<Expense>) ois.readObject();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        addExpense("Lunch", 12.5);
+        addExpense("Books", 30.0);
+        List<Expense> expenses = readExpenses();
+        System.out.println("All Expenses:");
+        expenses.forEach(System.out::println);
+    }
+}
